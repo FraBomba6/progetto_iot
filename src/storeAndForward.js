@@ -21,7 +21,7 @@ function initSF() {
             fileStream.write(seconds + "," + reqCount + "," + prevCount + "\n")
             seconds += 1
         }
-        if (seconds === 60)
+        if (seconds === 61)
             clearInterval(interval)
         prevCount = reqCount
     }, 1000)
