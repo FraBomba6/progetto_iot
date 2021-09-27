@@ -9,8 +9,15 @@ let mainChannel
 let wsServer
 let fileStream
 
+let reqCount = 0
+let prevCount = 0
+
 function initSF() {
     fileStream = fs.createWriteStream('local', {flags: 'a'})
+    setInterval(() => {
+        fileStream.write("ReqCount: " + reqCount + "   ReqSec: " + reqCount - prevCount)
+        prevCount = reqCount
+    }, 1000)
     wsServer = new ws.WebSocketServer({port: port})
     wsServer.on('connection', wsClient => {
         wsClient.id = uuid.v4()
@@ -23,6 +30,7 @@ function initSF() {
             })
         }
         wsClient.on('message', msg => {
+            reqCount++
             let obj = JSON.parse(msg)
             obj['clientId'] = wsClient.id
             if (status === 'offline') saveLocal(obj)
