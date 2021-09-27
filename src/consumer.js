@@ -19,7 +19,8 @@ function consume() {
                 .then(() => {
                     channel.ack(msg)
                 })
-                .catch(() => {
+                .catch((e) => {
+                    console.log(e)
                     channel.nack(msg)
                 })
         })
