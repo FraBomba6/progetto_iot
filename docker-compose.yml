@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  crowd-frame-server:
+    build:
+      context: .
+    image: ito_logger
+    container_name: iot_logger_container
+    ports:
+    - "8080:8080"
+    volumes:
+    - ./db:/var/lib/postgresql/12/main
