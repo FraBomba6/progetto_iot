@@ -27,7 +27,7 @@ function initSF() {
         let channel
         if (rabbitConnection) {
             console.log('New channel!')
-            channel = rabbitConnection.createChannel()
+            rabbitConnection.createChannel().then(ch => channel = ch)
         }
         wsClient.on('message', msg => {
             reqCount++
