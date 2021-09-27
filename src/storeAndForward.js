@@ -25,16 +25,21 @@ function initSF() {
         wsClient.id = uuid.v4()
         console.log('New client connected with id: ' + wsClient.id)
         let channel
-        if (rabbitConnection) {
-            console.log('New channel!')
-            rabbitConnection.createChannel().then(ch => channel = ch)
-        }
         wsClient.on('message', msg => {
             reqCount++
             let obj = JSON.parse(msg)
             obj['clientId'] = wsClient.id
             if (status === 'offline') saveLocal(obj)
-            else manageMsg(channel, 'toBeLogged', JSON.stringify(obj))
+            else {
+                if (channel)
+                    manageMsg(channel, 'toBeLogged', JSON.stringify(obj))
+                else {
+                    rabbitConnection.createChannel().then(ch => {
+                        channel = ch
+                        manageMsg(channel, 'toBeLogged', JSON.stringify(obj))
+                    })
+                }
+            }
             wsClient.send(wsClient.id)
         })
         wsClient.on('close', () => {
