@@ -16,7 +16,7 @@ function initSF() {
     fileStream = fs.createWriteStream('local', {flags: 'a'})
     setInterval(() => {
         prevCount = reqCount - prevCount
-        if (reqCount !== 0 && prevCount !== 0)
+        if (reqCount !== 0)
             fileStream.write("ReqCount: " + reqCount + "   ReqSec: " + prevCount + "\n")
         prevCount = reqCount
     }, 1000)

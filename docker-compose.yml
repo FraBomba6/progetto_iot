@@ -3,7 +3,7 @@ services:
   crowd-frame-server:
     build:
       context: .
-    image: ito_logger
+    image: iot_logger
     container_name: iot_logger_container
     ports:
     - "8080:8080"
