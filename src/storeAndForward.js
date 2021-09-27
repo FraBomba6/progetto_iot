@@ -18,7 +18,7 @@ function initSF() {
     let interval = setInterval(() => {
         prevCount = reqCount - prevCount
         if (reqCount !== 0) {
-            fileStream.write("Count:" + seconds + "   ReqCount: " + reqCount + "   ReqSec: " + prevCount + "\n")
+            fileStream.write(seconds + "," + reqCount + "," + prevCount + "\n")
             seconds += 1
         }
         if (seconds === 60)
