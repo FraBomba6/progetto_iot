@@ -15,6 +15,7 @@ function consume() {
 
         channel.consume('toBeLogged', async function (msg) {
             let parsed_msg = JSON.parse(msg.content.toString())
+            console.log(msg.content.toString())
             db.log([parsed_msg['clientId'], parsed_msg['sequenceNumber'], parsed_msg['msg']])
                 .then(() => {
                     channel.ack(msg)
