@@ -15,7 +15,8 @@ let prevCount = 0
 function initSF() {
     fileStream = fs.createWriteStream('local', {flags: 'a'})
     setInterval(() => {
-        fileStream.write("ReqCount: " + reqCount + "   ReqSec: " + reqCount - prevCount)
+        prevCount = reqCount - prevCount
+        fileStream.write("ReqCount: " + reqCount + "   ReqSec: " + prevCount)
         prevCount = reqCount
     }, 1000)
     wsServer = new ws.WebSocketServer({port: port})
